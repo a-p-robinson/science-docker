@@ -1,0 +1,55 @@
+FROM ubuntu:18.04
+
+LABEL maintainer.name "ROOT team"
+LABEL maintainer.email "root-dev@cern.ch"
+
+ENV LANG C.UTF-8
+
+ARG ROOT_URL=http://cern.ch/geant4-data/releases/
+ARG ROOT_SRC_FILE=geant4.10.05.tar.gz
+
+WORKDIR /userhome
+
+COPY packages packages
+
+SHELL ["/bin/bash", "-c"] 
+
+RUN apt-get update -qq \
+ && ln -sf /usr/share/zoneinfo/UTC /etc/localtime \
+ && apt-get -y install $(cat packages) wget\
+ && rm -rf /var/lib/apt/lists/*\
+ && mkdir /opt/src \
+ && cd /opt/src \
+ && wget ${ROOT_URL}${ROOT_SRC_FILE} \
+ && tar -xzvf ${ROOT_SRC_FILE} \
+ && rm -f ${ROOT_SRC_FILE} \
+ && mkdir /opt/src/build \
+ && cd /opt/src/build \
+ && cmake -DCMAKE_INSTALL_PREFIX=/opt/geant4.10.05_NoMT \
+      -DGEANT4_USE_G3TOG4=ON \
+      -DGEANT4_USE_GDML=ON \
+      -DGEANT4_INSTALL_DATA=ON \
+      -DGEANT4_USE_OPENGL_X11=ON \
+      -DGEANT4_USE_RAYTRACER_X11=ON \
+      -DGEANT4_USE_SYSTEM_CLHEP=OFF \
+      -DGEANT4_USE_QT=ON \
+      -DGEANT4_BUILD_MULTITHREADED=OFF \
+      -DGEANT4_USE_GDML=ON \
+      /opt/src/geant4.10.05/ \
+ && make -j $(nproc) install \
+ && rm -rf /opt/src/build
+
+ENV GEANT_ROOT /opt/geant4.10.05_NoMT
+ENV LD_LIBRARY_PATH $GEANT_ROOT/lib:$LD_LIBRARY_PATH
+ENV G4INCLDATA $GEANT_ROOT/share/Geant4-10.5.0/data/G4INCL1.0
+ENV G4LEVELGAMMADATA $GEANT_ROOT/share/Geant4-10.5.0/data/PhotonEvaporation5.3
+ENV G4RADIOACTIVEDATA $GEANT_ROOT/share/Geant4-10.5.0/data/RadioactiveDecay5.3
+ENV G4PIIDATA $GEANT_ROOT/share/Geant4-10.5.0/data/G4PII1.3
+ENV G4SAIDXSDATA $GEANT_ROOT/share/Geant4-10.5.0/data/G4SAIDDATA2.0
+ENV G4ABLADATA $GEANT_ROOT/share/Geant4-10.5.0/data/G4ABLA3.1
+ENV G4REALSURFACEDATA $GEANT_ROOT/share/Geant4-10.5.0/data/RealSurface2.1.1
+ENV G4NEUTRONHPDATA $GEANT_ROOT/share/Geant4-10.5.0/data/G4NDL4.5
+ENV G4PARTICLEXSDATA $GEANT_ROOT/share/Geant4-10.5.0/data/G4PARTICLEXS1.1
+ENV G4ENSDFSTATEDATA $GEANT_ROOT/share/Geant4-10.5.0/data/G4ENSDFSTATE2.2
+ENV G4LEDATA $GEANT_ROOT/share/Geant4-10.5.0/data/G4EMLOW7.7
+ENV PATH $GEANT_ROOT/bin:$PATH
