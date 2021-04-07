@@ -71,9 +71,15 @@ RUN  apt-get update -qq \
   -DROOTCINT_EXECUTABLE=/opt/root/bin/rootcint \
   -DGATE_USE_ITK=OFF \
   /opt/src/Gate-8.2/ \
-&& make -j $(nproc) install
+&& make -j $(nproc) install \
+&& cd /opt/src/Gate-8.2/cluster_tools/filemerger \
+&& make \
+&& cp gjm /opt/gate_v8.2-install/bin/ \
+&& cd /opt/src/Gate-8.2/cluster_tools/jobsplitter \
+&& make  \
+&& cp gjs /opt/gate_v8.2-install/bin/
 
-RUN rm -rf /opt/src/build_root
+RUN rm -rf /opt/src/build_gate
 
 # Set env for Gate
 ENV PATH /opt/gate_v8.2-install/bin:$PATH

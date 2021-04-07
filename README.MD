@@ -61,11 +61,13 @@ Dockerfiles and associated scripts for building scientific software in [Docker](
 
 ## Todo
 
-- [ ] Add latest Gate (9.0)
-  - [ ] Needs new version of Geant4
-  - [ ] ROOT6?
-  - [ ] Include OpenTRK?
+- [ ] Build cluster tools for Gate
+- [X] Add latest Gate (9.0)
+  - [X] Needs new version of Geant4
+  - [X] ROOT6? - works with ROOT5
+  - [ ] Include OpenRTK?
 - [ ] Add STIR
+- [ ] Add ROOT6 from source
 - [ ] Add dawn renderer
 - [ ] Add radware
 - [ ] Add scripts and instructions for compiling code using containers
