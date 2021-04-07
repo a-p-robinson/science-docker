@@ -62,5 +62,8 @@ Dockerfiles and associated scripts for building scientific software in [Docker](
 ## Todo
 
 - [ ] Add latest Gate (9.0)
+  - [ ] Inldude OpenTRK?
 - [ ] Add STIR
+- [ ] Add dawn renderer
+- [ ] Add radware
 - [ ] Add scripts and instructions for compiling code using containers
