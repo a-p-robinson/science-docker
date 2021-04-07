@@ -61,7 +61,7 @@ Dockerfiles and associated scripts for building scientific software in [Docker](
 
 ## Todo
 
-- [ ] Build cluster tools for Gate
+- [X] Build cluster tools for Gate
 - [X] Add latest Gate (9.0)
   - [X] Needs new version of Geant4
   - [X] ROOT6? - works with ROOT5
