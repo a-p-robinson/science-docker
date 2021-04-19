@@ -50,6 +50,7 @@ Dockerfiles and associated scripts for building scientific software in [Docker](
 - [STIR](http://stir.sourceforge.net/) with [NPL](https://www.npl.co.uk/) extensions
 - stir-u18.04:4.0 base
 - Compiled from source
+- **NB: Requires access to NPL repository**
 
 ## Usage
 
