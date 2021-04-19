@@ -41,6 +41,16 @@ Dockerfiles and associated scripts for building scientific software in [Docker](
 - Using precomplied binaries from https://root.cern/download/
 - Recreation of https://github.com/root-project/root-docker/tree/master/ubuntu
 
+### `STIR`
+- [STIR](http://stir.sourceforge.net/)
+- root-u18.04:5.34.38 base
+- Compiled from source
+
+### `STIR-NPL`
+- [STIR](http://stir.sourceforge.net/) with [NPL](https://www.npl.co.uk/) extensions
+- stir-u18.04:4.0 base
+- Compiled from source
+
 ## Usage
 
 ### Building
@@ -66,7 +76,7 @@ Dockerfiles and associated scripts for building scientific software in [Docker](
   - [X] Needs new version of Geant4
   - [X] ROOT6? - works with ROOT5
   - [ ] Include OpenRTK?
-- [ ] Add STIR
+- [X] Add STIR
 - [ ] Add ROOT6 from source
 - [ ] Add dawn renderer
 - [ ] Add radware
