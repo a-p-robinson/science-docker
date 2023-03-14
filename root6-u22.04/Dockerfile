@@ -1,0 +1,43 @@
+FROM ubuntu:22.04
+
+LABEL maintainer.name="Andrew Robinson"
+LABEL maintainer.email="andrew.robinson@npl.co.uk"
+
+ENV LANG=C.UTF-8
+
+ARG ROOT_URL=https://root.cern.ch/download/
+ARG ROOT_SRC_FILE=root_v6.28.00.source.tar.gz
+
+WORKDIR /userhome
+
+COPY packages packages
+
+SHELL ["/bin/bash", "-c"] 
+
+RUN apt-get update -qq \
+ && ln -sf /usr/share/zoneinfo/UTC /etc/localtime \
+ && apt-get -y install $(cat packages) wget\
+ && rm -rf /var/lib/apt/lists/*\
+ && mkdir /opt/src \
+ && cd /opt/src \
+ && wget ${ROOT_URL}${ROOT_SRC_FILE} \
+ && tar -xzvf ${ROOT_SRC_FILE} \
+ && rm -f ${ROOT_SRC_FILE} \
+ && mkdir /opt/src/build_root \
+ && cd /opt/src/build_root \
+ && cmake -DCMAKE_INSTALL_PREFIX=/opt/root/ /opt/src/root-6.28.00/ \
+ && make -j $(nproc) install
+
+RUN rm -rf /opt/src/build_root
+
+ENV ROOTSYS /opt/root
+ENV LD_LIBRARY_PATH $ROOTSYS/lib
+ENV DYLD_LIBRARY_PATH $LD_LIBRARY_PATH
+ENV CMAKE_PREFIX_PATH $ROOTSYS
+ENV SHLIB_PATH $ROOTSYS/lib
+ENV LIBPATH $ROOTSYS/lib
+ENV PYTHONPATH $ROOTSYS/lib:$PYTHONPATH
+ENV MANPATH $ROOTSYS
+ENV PATH $ROOTSYS/bin:$PATH
+
+# #CMD ["root", "-b"]

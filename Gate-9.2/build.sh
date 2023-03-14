@@ -1,5 +1,5 @@
 #!/bin/bash
 
-NAME="root-cern:6.22.06"
+NAME="gate-u22.04:9.2"
 
 docker build --rm -f "Dockerfile" -t $NAME .

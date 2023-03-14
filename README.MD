@@ -66,7 +66,7 @@ Dockerfiles and associated scripts for building scientific software in [Docker](
 
 ### Running
 
-- `wrap.sh` in each subdirectory (where appropriate) can be used pass X11 and `$PWD` to the container eg: 
+- `wrap.sh` in each subdirectory (where appropriate) can be used to pass X11 and `$PWD` to the container eg: 
   - `alias root='./rootu18.04/wrap.sh'`
   - `alias Gate='./Gate-8.2/wrap.sh'`
 
@@ -79,6 +79,7 @@ Dockerfiles and associated scripts for building scientific software in [Docker](
   - [ ] Include OpenRTK?
 - [X] Add STIR
 - [ ] Add ROOT6 from source
+- [ ] Add GATE 9.2
 - [ ] Add dawn renderer
 - [ ] Add radware
 - [ ] Add scripts and instructions for compiling code using containers
